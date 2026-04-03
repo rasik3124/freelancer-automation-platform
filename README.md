@@ -2,7 +2,7 @@
 # Crescent Black Studio — Freelancing Automation Platform
 
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" alt="Crescent Black Banner" width="100%" />
+  <img src="./public/banner.png" alt="Crescent Black Studio Banner" width="100%" />
   <p><i>The complete ecosystem for AI-driven freelancing and client management.</i></p>
 </div>
 
