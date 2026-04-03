@@ -1,0 +1,21 @@
+# ── Netlify Build Configuration ─────────────────────────────────────────────
+# Crescent Black — React SPA frontend
+
+[build]
+  command   = "npm run build"
+  publish   = "dist"
+
+# ── SPA Fallback ────────────────────────────────────────────────────────────
+# All routes that don't match a static file are served index.html so
+# React Router handles them client-side.
+[[redirects]]
+  from   = "/*"
+  to     = "/index.html"
+  status = 200
+
+# ── Environment Variables (build-time) ──────────────────────────────────────
+# Set VITE_API_URL in Netlify → Site settings → Environment variables.
+# Example: https://crescent-black-api.onrender.com
+#
+# [build.environment]
+#   VITE_API_URL = "https://your-backend-domain.com"

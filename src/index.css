@@ -1,0 +1,259 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* Chrome Black palette */
+  --color-base:     #0a0a0f;
+  --color-surface:  #0f0f1a;
+  --color-elevated: #141420;
+  --color-border:   #1e1e2e;
+
+  /* Gold accent — replaces orange */
+  --color-accent:       #D4AF37;
+  --color-accent-muted: #B8962E;
+
+  /* Keep gold alias for backwards compat */
+  --color-gold:       #D4AF37;
+  --color-gold-muted: #B8962E;
+
+  /* Text */
+  --color-text-primary:   #F0F0F0;
+  --color-text-secondary: #A0A0B0;
+  --color-text-muted:     #6B6B80;
+  --color-text-disabled:  #3A3A50;
+
+  /* Status */
+  --color-error:   #EF4444;
+  --color-success: #10B981;
+  --color-warning: #F59E0B;
+
+  /* Border radii */
+  --radius-button: 4px;
+  --radius-card:   8px;
+
+  /* Shadows */
+  --shadow-glow:      0 0 24px rgba(212, 175, 55, 0.18);
+  --shadow-gold-glow: 0 0 24px rgba(212, 175, 55, 0.25);
+  --shadow-card:      0 4px 24px rgba(0, 0, 0, 0.4);
+
+  @keyframes scan {
+    from { transform: translateY(-100%); }
+    to   { transform: translateY(100%);  }
+  }
+
+  @keyframes flicker {
+    0%   { opacity: 0.8; }
+    5%   { opacity: 0.9; }
+    10%  { opacity: 0.8; }
+    15%  { opacity: 1;   }
+    20%  { opacity: 0.8; }
+    100% { opacity: 1;   }
+  }
+
+  @keyframes pulse-glow {
+    0%   { box-shadow: 0 0 8px  rgba(212, 175, 55, 0.2); }
+    50%  { box-shadow: 0 0 20px rgba(212, 175, 55, 0.5); }
+    100% { box-shadow: 0 0 8px  rgba(212, 175, 55, 0.2); }
+  }
+
+  @keyframes shimmer {
+    0%   { background-position: -200% center; }
+    100% { background-position:  200% center; }
+  }
+}
+
+@layer base {
+  /* ── Scrollbar — fully transparent, accent on hover ─────────────────────── */
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+  }
+  html::-webkit-scrollbar         { width: 4px; height: 4px; }
+  html::-webkit-scrollbar-track   { background: transparent; }
+  html::-webkit-scrollbar-thumb   { background: transparent; border-radius: 99px; }
+  html::-webkit-scrollbar-thumb:hover { background: rgba(212, 175, 55, 0.35); }
+  html::-webkit-scrollbar-corner  { background: transparent; }
+
+  *, *::before, *::after {
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+  }
+  *::-webkit-scrollbar         { width: 4px; height: 4px; }
+  *::-webkit-scrollbar-track   { background: transparent; }
+  *::-webkit-scrollbar-thumb   { background: transparent; border-radius: 99px; transition: background 0.2s; }
+  *::-webkit-scrollbar-thumb:hover { background: rgba(212, 175, 55, 0.35); }
+  *::-webkit-scrollbar-corner  { background: transparent; }
+
+  body {
+    @apply bg-base text-text-primary antialiased selection:bg-accent/30 selection:text-accent;
+    font-family: var(--font-sans);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display tracking-tight;
+  }
+
+  /* Consistent focus ring */
+  :focus-visible {
+    outline: 2px solid rgba(212, 175, 55, 0.6);
+    outline-offset: 2px;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Glass morphism card */
+  .glass {
+    @apply bg-surface/80 backdrop-blur-md border border-border;
+  }
+
+  /* Gold glass variant */
+  .glass-gold {
+    background: linear-gradient(135deg, rgba(212,175,55,0.05) 0%, rgba(212,175,55,0.02) 100%);
+    @apply border border-accent/20 backdrop-blur-md;
+  }
+
+  /* Subtle dot grid background */
+  .grid-pattern {
+    background-image: radial-gradient(circle at 1px 1px, var(--color-border) 1px, transparent 0);
+    background-size: 40px 40px;
+  }
+
+  /* Corner bracket tech border */
+  .technical-border {
+    @apply border border-border relative;
+    &::before {
+      content: '';
+      @apply absolute -top-px -left-px w-2.5 h-2.5 border-t border-l border-accent/60;
+    }
+    &::after {
+      content: '';
+      @apply absolute -bottom-px -right-px w-2.5 h-2.5 border-b border-r border-accent/60;
+    }
+  }
+
+  /* Gold scanline overlay */
+  .scanline {
+    @apply absolute inset-0 pointer-events-none overflow-hidden;
+    background: linear-gradient(to bottom, transparent, rgba(212, 175, 55, 0.04) 50%, transparent);
+    animation: scan 5s linear infinite;
+  }
+
+  .flicker {
+    animation: flicker 0.5s infinite;
+  }
+
+  /* Gold glow hover */
+  .hover-glow {
+    @apply hover:shadow-[0_0_24px_rgba(212,175,55,0.18)] hover:border-accent/40 transition-all duration-300;
+  }
+
+  /* Gold glow text */
+  .glow-text {
+    @apply text-accent;
+    text-shadow: 0 0 12px rgba(212, 175, 55, 0.6);
+  }
+
+  /* Shimmer text effect */
+  .shimmer-text {
+    background: linear-gradient(90deg, var(--color-accent) 0%, #ffd700 40%, var(--color-accent) 60%, var(--color-accent-muted) 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: shimmer 3s linear infinite;
+  }
+
+  /* Bento grid */
+  .bento-grid {
+    @apply grid gap-4 grid-cols-1 md:grid-cols-12;
+  }
+
+  .bento-card {
+    @apply technical-border bg-surface p-6 flex flex-col justify-between h-full hover-glow transition-all duration-300;
+  }
+
+  /* Data rows */
+  .data-row {
+    @apply border-b border-border transition-colors hover:bg-elevated;
+  }
+
+  .mono-label {
+    @apply font-mono text-[10px] uppercase tracking-widest text-text-muted;
+  }
+
+  .data-cell {
+    @apply border border-border p-4 font-mono text-[11px] uppercase tracking-tight;
+  }
+
+  /* Terminal cursor */
+  .terminal-cursor {
+    @apply inline-block w-2 h-4 bg-accent ml-1;
+    animation: flicker 1s infinite step-end;
+  }
+
+  /* Status badges */
+  .badge-gold    { @apply rounded-full border border-accent/30 bg-accent/10 px-2 py-0.5 text-[10px] font-bold text-accent; }
+  .badge-success { @apply rounded-full border border-success/30 bg-success/10 px-2 py-0.5 text-[10px] font-bold text-success; }
+  .badge-error   { @apply rounded-full border border-error/30 bg-error/10 px-2 py-0.5 text-[10px] font-bold text-error; }
+  .badge-warning { @apply rounded-full border border-warning/30 bg-warning/10 px-2 py-0.5 text-[10px] font-bold text-warning; }
+  .badge-muted   { @apply rounded-full border border-border bg-elevated px-2 py-0.5 text-[10px] font-bold text-textMuted; }
+
+  /* Stats card */
+  .stat-card {
+    @apply glass-gold rounded-2xl p-5 flex flex-col gap-3 hover-glow transition-all cursor-default;
+  }
+
+  /* ── Scrollbar — theme-matched, near-invisible ───────────────────────────── */
+
+  /* Global default: ultra-thin, dark thumb, transparent track */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.06) transparent;
+  }
+
+  /* WebKit (Chrome, Edge, Safari) — global */
+  *::-webkit-scrollbar         { width: 3px; height: 3px; }
+  *::-webkit-scrollbar-track   { background: transparent; }
+  *::-webkit-scrollbar-thumb   {
+    background: rgba(255,255,255,0.07);
+    border-radius: 99px;
+    transition: background 0.2s;
+  }
+  *::-webkit-scrollbar-thumb:hover {
+    background: rgba(199, 168, 109, 0.35); /* accent/35 */
+  }
+  *::-webkit-scrollbar-corner  { background: transparent; }
+
+  /* .custom-scrollbar — same styling, explicit 4px for content areas */
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.07) transparent;
+    &::-webkit-scrollbar       { width: 4px; height: 4px; }
+    &::-webkit-scrollbar-track { background: transparent; }
+    &::-webkit-scrollbar-thumb {
+      background: rgba(255,255,255,0.08);
+      border-radius: 99px;
+    }
+    &::-webkit-scrollbar-thumb:hover {
+      background: rgba(199, 168, 109, 0.40);
+    }
+  }
+
+  /* Noise texture */
+  .noise-bg {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    @apply opacity-[0.02] pointer-events-none absolute inset-0;
+  }
+
+  /* Pulse animation class */
+  .pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+}

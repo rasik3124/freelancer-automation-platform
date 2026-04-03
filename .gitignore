@@ -1,0 +1,16 @@
+# ── Environment Secrets (CRITICAL: Never push to git) ─────────────────────────
+.env*
+!.env.example
+
+# ── Dependencies / Build ──────────────────────────────────────────────────────
+node_modules/
+build/
+dist/
+coverage/
+
+# ── OS / Logs ─────────────────────────────────────────────────────────────────
+.DS_Store
+*.log
+
+# ── Local Data ───────────────────────────────────────────────────────────────
+.data/
