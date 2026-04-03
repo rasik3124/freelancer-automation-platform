@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Crescent Black Studio — Freelancing Automation Platform
 
 <div align="center">
@@ -89,3 +90,7 @@ This project follows strict security protocols:
 <div align="center">
   <p>&copy; 2026 Crescent Black Studio. All Rights Reserved.</p>
 </div>
+=======
+# freelancer-automation-platform
+AI powered SaaS platform to automate freelancer workflow including client management, proposals and scheduling
+>>>>>>> 54063d8ee1ae2c5dc18f7a227176acffc5c46c38
